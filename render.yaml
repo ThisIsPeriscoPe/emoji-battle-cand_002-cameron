@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: emoji-battle-assessment-template
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    preDeployCommand: npx prisma migrate deploy
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DEBUG_KEY
+        sync: false
+      - key: GIT_SHA
+        sync: false

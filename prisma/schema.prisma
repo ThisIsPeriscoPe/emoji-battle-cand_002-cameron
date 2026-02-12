@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  eventId   String   @id
+  matchId   String
+  type      String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model MatchState {
+  matchId   String   @id
+  state     Json
+  version   Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model ErrorLog {
+  id        String   @id @default(cuid())
+  requestId String
+  matchId   String?
+  eventId   String?
+  message   String
+  details   Json?
+  createdAt DateTime @default(now())
+}
